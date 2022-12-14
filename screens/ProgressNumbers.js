@@ -1,6 +1,6 @@
 import { FlatList, SafeAreaView, Text, View } from "react-native"
 
-export default function Progress() {
+export default function ProgressChart() {
   const data = []
   for (let i = 0; i <= 31; i++) {
     data.push({ id: i, value: `val - ${i}` })
@@ -9,8 +9,6 @@ export default function Progress() {
 
   return (
     <View>
-      <Text>I am stats!</Text>
-
       <Text>I would be a drop down month selector</Text>
 
       <SafeAreaView>

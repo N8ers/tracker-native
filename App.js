@@ -1,20 +1,32 @@
 import { StyleSheet } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import Home from "./screens/Home"
 import Today from "./screens/Today"
-import Progress from "./screens/Progress"
 import Settings from "./screens/Settings"
+import ProgressNumbers from "./screens/ProgressNumbers"
+import ProgressChart from "./screens/ProgressChart"
 
-const Tab = createBottomTabNavigator()
+const BottomTab = createBottomTabNavigator()
+const TopTab = createMaterialTopTabNavigator()
+
+function ProgressNavigator() {
+  return (
+    <TopTab.Navigator>
+      <TopTab.Screen name="Numbers" component={ProgressNumbers} />
+      <TopTab.Screen name="Chart" component={ProgressChart} />
+    </TopTab.Navigator>
+  )
+}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Today">
-        <Tab.Screen
+      <BottomTab.Navigator initialRouteName="Today">
+        <BottomTab.Screen
           name="Home"
           component={Home}
           options={{
@@ -23,7 +35,7 @@ export default function App() {
             ),
           }}
         />
-        <Tab.Screen
+        <BottomTab.Screen
           name="Today"
           component={Today}
           options={{
@@ -36,9 +48,9 @@ export default function App() {
             ),
           }}
         />
-        <Tab.Screen
+        <BottomTab.Screen
           name="Progress"
-          component={Progress}
+          component={ProgressNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
@@ -49,7 +61,7 @@ export default function App() {
             ),
           }}
         />
-        <Tab.Screen
+        <BottomTab.Screen
           name="Settings"
           component={Settings}
           options={{
@@ -62,7 +74,7 @@ export default function App() {
             ),
           }}
         />
-      </Tab.Navigator>
+      </BottomTab.Navigator>
     </NavigationContainer>
   )
 }
