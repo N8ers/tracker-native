@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { StyleSheet } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -9,9 +10,15 @@ import Today from "./screens/Today"
 import Settings from "./screens/Settings"
 import ProgressNumbers from "./screens/ProgressNumbers"
 import ProgressChart from "./screens/ProgressChart"
+import axios from "axios"
 
 const BottomTab = createBottomTabNavigator()
 const TopTab = createMaterialTopTabNavigator()
+
+const isProd = false
+const BASE_URL = isProd
+  ? "https://tracker-api-production-ec2a.up.railway.app"
+  : "http://localhost:4000"
 
 function ProgressNavigator() {
   return (
@@ -23,6 +30,18 @@ function ProgressNavigator() {
 }
 
 export default function App() {
+  const fetchData = async () => {
+    try {
+      result = await axios.get(BASE_URL + "/weights/1")
+    } catch (error) {
+      console.log("error getting data ", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  })
+
   return (
     <NavigationContainer>
       <BottomTab.Navigator initialRouteName="Today">
