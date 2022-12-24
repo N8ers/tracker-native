@@ -1,11 +1,8 @@
+import { useSelector } from "react-redux"
 import { FlatList, SafeAreaView, Text, View } from "react-native"
 
 export default function ProgressChart() {
-  const data = []
-  for (let i = 0; i <= 31; i++) {
-    data.push({ id: i, value: `val - ${i}` })
-  }
-  console.log(data)
+  const weights = useSelector((state) => state.weight.weights)
 
   return (
     <View>
@@ -13,10 +10,12 @@ export default function ProgressChart() {
 
       <SafeAreaView>
         <FlatList
-          data={data}
+          data={weights}
           renderItem={({ item }) => (
             <View>
-              <Text>{item.value}</Text>
+              <Text>
+                {item.date.split("T")[0]} - {item.weight}
+              </Text>
             </View>
           )}
           keyExtractor={(item) => item.id}
