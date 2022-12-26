@@ -19,12 +19,12 @@ export default function ScreensWrapper({ children }) {
 
   return (
     <>
-      {isWeightsLoading ? (
+      {children}
+
+      {isWeightsLoading && (
         <View style={styles.loading}>
           <ActivityIndicator size="large" />
         </View>
-      ) : (
-        children
       )}
     </>
   )
@@ -37,7 +37,9 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    alignItems: "center",
+    opacity: 0.5,
+    backgroundColor: "black",
     justifyContent: "center",
+    alignItems: "center",
   },
 })
