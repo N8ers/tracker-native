@@ -14,7 +14,8 @@ export default function ProgressChart() {
           renderItem={({ item }) => (
             <View>
               <Text>
-                {item.date.split("T")[0]} - {item.weight}
+                {/* {item.date.split("T")[0]} - {item.weight} */}
+                {item.date} - {item.weight}
               </Text>
             </View>
           )}

@@ -1,20 +1,40 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+
+import * as http from "../util/http"
+
+export const fetchWeights = createAsyncThunk(
+  "weight/fetchWeights",
+  async () => {
+    const response = await http.fetchWeights()
+    return response
+  }
+)
 
 const weightsSlice = createSlice({
   name: "weights",
   initialState: {
-    weights: [
-      { id: 1, weight: 194, date: "2022-12-24T05:00:00.000Z", user_id: 1 },
-    ],
+    weights: [],
+    loading: false,
+    error: false,
   },
   reducers: {
-    fetchWeights: (state, action) => {
-      console.log("reducers/fetchWeights")
-      state.weights
-    },
     removeWeight: (state) => {},
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchWeights.pending, (state) => {
+        state.loading = true
+        state.error = false
+      })
+      .addCase(fetchWeights.fulfilled, (state, action) => {
+        state.weights = action.payload
+        state.loading = false
+      })
+      .addCase(fetchWeights.rejected, (state) => {
+        state.loading = false
+        state.error = "ERROR!!!!!"
+      })
   },
 })
 
-export const fetchWeights = weightsSlice.actions.fetchWeights
 export default weightsSlice.reducer
