@@ -1,9 +1,18 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { Text, View, StyleSheet, Modal, Button, TextInput } from "react-native"
 
+import { addTodaysWeight } from "../store/weights"
+
 export default function Today() {
+  const dispatch = useDispatch()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [weight, setWeight] = useState(0)
+
+  const addWeight = () => {
+    dispatch(addTodaysWeight({ weight }))
+    setIsModalVisible(false)
+  }
 
   return (
     <View style={styles.pageContainer}>
@@ -19,13 +28,14 @@ export default function Today() {
           <Text>hi, record todays weight</Text>
           <TextInput
             style={styles.numberInput}
-            value={weight}
+            defaultValue={weight}
+            onChangeText={(newWeight) => setWeight(newWeight)}
             keyboardType="numeric"
           />
 
           <View style={styles.buttonGroup}>
             <Button title="cancel" onPress={() => setIsModalVisible(false)} />
-            <Button title="add" onPress={() => setIsModalVisible(false)} />
+            <Button title="add" onPress={addWeight} />
           </View>
         </View>
       </Modal>
