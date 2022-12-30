@@ -2,6 +2,7 @@
 // it calls network requests on laod
 // handles loading spinner and globabl layout logic
 // AppWrapper sounds like
+// Maybe this is the 'ScreenManager'? idk what to call this.
 
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -9,8 +10,12 @@ import { StyleSheet, View, ActivityIndicator } from "react-native"
 
 import { fetchWeights } from "../store/weights"
 
-export default function ScreensWrapper({ children }) {
+import NotAuthenticatedNavigator from "../navigators/NotAuthenticatedNavigator"
+import AuthenticatedNavigator from "../navigators/AuthenticatedNavigator"
+
+export default function ScreensWrapper() {
   const isWeightsLoading = useSelector((state) => state.weight.loading)
+  const hasToken = useSelector((state) => state.user.token)
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -19,7 +24,8 @@ export default function ScreensWrapper({ children }) {
 
   return (
     <>
-      {children}
+      {!hasToken && <NotAuthenticatedNavigator />}
+      {hasToken && <AuthenticatedNavigator />}
 
       {isWeightsLoading && (
         <View style={styles.loading}>
