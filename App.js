@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { store } from "./store/store"
 
+import Auth from "./screens/Auth"
 import Home from "./screens/Home"
 import Today from "./screens/Today"
 import Settings from "./screens/Settings"
@@ -25,66 +26,95 @@ function ProgressNavigator() {
   )
 }
 
+function AuthenticatedNavigator() {
+  return (
+    <NavigationContainer>
+      <BottomTab.Navigator initialRouteName="Today">
+        <BottomTab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Today"
+          component={Today}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="calendar-today"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Progress"
+          component={ProgressNavigator}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="chart-timeline-variant-shimmer"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Settings"
+          component={Settings}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="cog-outline"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+      </BottomTab.Navigator>
+    </NavigationContainer>
+  )
+}
+
+function NotAuthenticatedNavigator() {
+  return (
+    <NavigationContainer>
+      <BottomTab.Navigator initialRouteName="Today">
+        <BottomTab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Auth"
+          component={Auth}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="login" color={color} size={size} />
+            ),
+          }}
+        />
+      </BottomTab.Navigator>
+    </NavigationContainer>
+  )
+}
+
 export default function App() {
   return (
     <Provider store={store}>
       <ScreensWrapper>
-        <NavigationContainer>
-          <BottomTab.Navigator initialRouteName="Today">
-            <BottomTab.Screen
-              name="Home"
-              component={Home}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons
-                    name="home"
-                    color={color}
-                    size={size}
-                  />
-                ),
-              }}
-            />
-            <BottomTab.Screen
-              name="Today"
-              component={Today}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons
-                    name="calendar-today"
-                    color={color}
-                    size={size}
-                  />
-                ),
-              }}
-            />
-            <BottomTab.Screen
-              name="Progress"
-              component={ProgressNavigator}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons
-                    name="chart-timeline-variant-shimmer"
-                    color={color}
-                    size={size}
-                  />
-                ),
-              }}
-            />
-            <BottomTab.Screen
-              name="Settings"
-              component={Settings}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons
-                    name="cog-outline"
-                    color={color}
-                    size={size}
-                  />
-                ),
-              }}
-            />
-          </BottomTab.Navigator>
-        </NavigationContainer>
+        <AuthenticatedNavigator />
       </ScreensWrapper>
     </Provider>
   )

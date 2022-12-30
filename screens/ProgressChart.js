@@ -61,7 +61,6 @@ export default function ProgressChart() {
             month: "short",
             day: "numeric",
           })
-          console.log("monthName ", value, monthName)
           return value === firstDateOfMonth[month] ? monthName : ""
         }}
       />
