@@ -18,9 +18,14 @@ export default function ScreensWrapper() {
   const hasToken = useSelector((state) => state.user.token)
 
   const dispatch = useDispatch()
+
   useEffect(() => {
-    dispatch(fetchWeights())
-  }, [])
+    console.log("check if user token is valid - then fire fetchWeights")
+    dispatch(authToken())
+    if (hasToken) {
+      dispatch(fetchWeights())
+    }
+  }, [hasToken])
 
   return (
     <>
