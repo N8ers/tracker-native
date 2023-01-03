@@ -32,3 +32,13 @@ export const postTodaysWeight = async (weight) => {
     console.log("error posting todays weight ", error)
   }
 }
+
+export const logUserIn = async (payload) => {
+  try {
+    console.log(payload)
+    // const result = await axios.get(BASE_URL + "/", payload)
+    // console.log("result: ", result)
+  } catch (error) {
+    console.log("error logging user in ", error)
+  }
+}

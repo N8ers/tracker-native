@@ -14,7 +14,6 @@ export const addTodaysWeight = createAsyncThunk(
   "weight/postTodaysWeight",
   async ({ weight }) => {
     const response = await http.postTodaysWeight(weight)
-    console.log("RESPONSE ", response)
     return response
   }
 )

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { StyleSheet, View, ActivityIndicator } from "react-native"
 
 import { fetchWeights } from "../store/weights"
+import { authToken } from "../store/user"
 
 import NotAuthenticatedNavigator from "../navigators/NotAuthenticatedNavigator"
 import AuthenticatedNavigator from "../navigators/AuthenticatedNavigator"
@@ -25,7 +26,7 @@ export default function ScreensWrapper() {
     if (hasToken) {
       dispatch(fetchWeights())
     }
-  }, [hasToken])
+  }, [])
 
   return (
     <>
