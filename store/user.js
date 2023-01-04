@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import * as http from "../util/http"
+import { setToken, getToken } from "../util/deviceStorage"
 
 const initState = {
   token: false,
@@ -12,12 +13,15 @@ const initState = {
 
 export const authToken = createAsyncThunk("user/authToken", async () => {
   console.log("authToken Thunk")
+  const storedToken = await getToken("token")
+  console.log("token ? ", storedToken)
 })
 
 export const authUser = createAsyncThunk(
   "user/authUser",
   async ({ username, password }) => {
     const response = await http.logUserIn({ username, password })
+    setToken("hiii - 1")
     return response
   }
 )

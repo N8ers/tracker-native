@@ -16,6 +16,7 @@ import AuthenticatedNavigator from "../navigators/AuthenticatedNavigator"
 
 export default function ScreensWrapper() {
   const isWeightsLoading = useSelector((state) => state.weight.loading)
+  const isAuthLoading = useSelector((state) => state.user.loading)
   const hasToken = useSelector((state) => state.user.token)
 
   const dispatch = useDispatch()
@@ -33,7 +34,7 @@ export default function ScreensWrapper() {
       {!hasToken && <NotAuthenticatedNavigator />}
       {hasToken && <AuthenticatedNavigator />}
 
-      {isWeightsLoading && (
+      {(isWeightsLoading || isAuthLoading) && (
         <View style={styles.loading}>
           <ActivityIndicator size="large" />
         </View>
