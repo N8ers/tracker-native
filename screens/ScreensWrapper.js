@@ -17,22 +17,22 @@ import AuthenticatedNavigator from "../navigators/AuthenticatedNavigator"
 export default function ScreensWrapper() {
   const isWeightsLoading = useSelector((state) => state.weight.loading)
   const isAuthLoading = useSelector((state) => state.user.loading)
-  const hasToken = useSelector((state) => state.user.token)
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     console.log("check if user token is valid - then fire fetchWeights")
     dispatch(authToken())
-    if (hasToken) {
+    if (isLoggedIn) {
       dispatch(fetchWeights())
     }
   }, [])
 
   return (
     <>
-      {!hasToken && <NotAuthenticatedNavigator />}
-      {hasToken && <AuthenticatedNavigator />}
+      {!isLoggedIn && <NotAuthenticatedNavigator />}
+      {isLoggedIn && <AuthenticatedNavigator />}
 
       {(isWeightsLoading || isAuthLoading) && (
         <View style={styles.loading}>
