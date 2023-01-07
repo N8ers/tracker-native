@@ -7,3 +7,7 @@ export const setToken = (token) => {
 export const getToken = async () => {
   return AsyncStorage.getItem("token")
 }
+
+export const removeToken = async () => {
+  return AsyncStorage.removeItem("token")
+}

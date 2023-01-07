@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import * as http from "../util/http"
-import { setToken, getToken } from "../util/deviceStorage"
+import { setToken, getToken, removeToken } from "../util/deviceStorage"
 
 const initState = {
   isLoggedIn: false,
@@ -27,6 +27,12 @@ export const authUser = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: initState,
+  reducers: {
+    logout: () => {
+      removeToken(null)
+      return initState
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(authUser.pending, (state) => {
@@ -34,7 +40,6 @@ const userSlice = createSlice({
         state.error = false
       })
       .addCase(authUser.fulfilled, (state, action) => {
-        console.log(action)
         state.username = action.payload.username
         state.userId = action.payload.id
         state.darkmode = action.payload.darkmode
@@ -47,5 +52,7 @@ const userSlice = createSlice({
       })
   },
 })
+
+export const { logout } = userSlice.actions
 
 export default userSlice.reducer
