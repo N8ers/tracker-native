@@ -1,7 +1,5 @@
 import axios from "axios"
 
-import { setToken } from "./deviceStorage"
-
 const IS_PROD = false
 const BASE_URL = IS_PROD
   ? "https://tracker-api-production-ec2a.up.railway.app"
@@ -38,8 +36,7 @@ export const postTodaysWeight = async (weight) => {
 export const logUserIn = async (payload) => {
   try {
     const result = await axios.post(BASE_URL + "/auth", payload)
-    setToken(result.data.accessToken)
-    return result.data.user
+    return result.data
   } catch (error) {
     console.log("error logging user in ", error)
   }

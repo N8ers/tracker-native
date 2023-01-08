@@ -20,7 +20,8 @@ export const authUser = createAsyncThunk(
   "user/authUser",
   async ({ username, password }) => {
     const response = await http.logUserIn({ username, password })
-    return response
+    setToken(response.accessToken)
+    return response.user
   }
 )
 
