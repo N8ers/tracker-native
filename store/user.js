@@ -14,15 +14,8 @@ const initState = {
 export const authToken = createAsyncThunk("user/authToken", async () => {
   // what should i do about loading spinner here?
   // maybe use the https://www.npmjs.com/package/expo-splash-screen lib?
-  const storedToken = await getToken("token")
-
-  if (storedToken) {
-    "user/authToken",
-      async () => {
-        const response = await http.authenticateToken({ storedToken })
-        console.log("user/authToken response:: ", response)
-      }
-  }
+  const response = await http.authenticateToken()
+  return response
 })
 
 export const authUser = createAsyncThunk(
@@ -57,6 +50,24 @@ const userSlice = createSlice({
         state.isLoggedIn = true
       })
       .addCase(authUser.rejected, (state) => {
+        state.loading = false
+        state.error = "ERROR!!!!!"
+      })
+      .addCase(authToken.pending, (state) => {
+        state.loading = true
+        state.error = false
+      })
+      .addCase(authToken.fulfilled, (state, action) => {
+        if (action?.payload?.id) {
+          state.username = action.payload.username
+          state.userId = action.payload.id
+          state.darkmode = action.payload.darkmode
+          state.isLoggedIn = true
+        }
+
+        state.loading = false
+      })
+      .addCase(authToken.rejected, (state) => {
         state.loading = false
         state.error = "ERROR!!!!!"
       })

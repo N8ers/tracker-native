@@ -1,9 +1,6 @@
-import axios, { AxiosRequestConfig } from "axios"
+import axios from "axios"
 
-const IS_PROD = false
-const BASE_URL = IS_PROD
-  ? "https://tracker-api-production-ec2a.up.railway.app"
-  : "http://localhost:4000"
+import { getToken } from "../util/deviceStorage"
 
 /**
  * TODO
@@ -14,19 +11,36 @@ const BASE_URL = IS_PROD
  */
 const USER_ID = 1
 
-axios.interceptors.request.use(
-  (config) => {
-    config.headers.authorization = `Bearer ${accessToken}`
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
-)
+const IS_PROD = false
+
+let authAxios
+
+const configAxios = async () => {
+  const accessToken = await getToken("token")
+  const Authorization = accessToken ? `Bearer ${accessToken}` : ""
+
+  authAxios = axios.create({
+    baseURL: IS_PROD
+      ? "https://tracker-api-production-ec2a.up.railway.app"
+      : "http://localhost:4000",
+    headers: {
+      Authorization,
+    },
+  })
+}
+
+// const authAxios = axios.create({
+//   baseURL: IS_PROD
+//     ? "https://tracker-api-production-ec2a.up.railway.app"
+//     : "http://localhost:4000",
+//   headers: {
+//     Authorization: `Bearer 3666`,
+//   },
+// })
 
 export const fetchWeights = async () => {
   try {
-    const result = await axios.get(BASE_URL + "/weights/" + USER_ID)
+    const result = await authAxios.get("/weights/" + USER_ID)
     return result.data
   } catch (error) {
     console.log("error getting data ", error)
@@ -36,7 +50,7 @@ export const fetchWeights = async () => {
 export const postTodaysWeight = async (weight) => {
   try {
     const data = { userId: USER_ID, weight }
-    const result = await axios.post(BASE_URL + "/todays-weight", data)
+    const result = await authAxios.post("/todays-weight", data)
     return result.data
   } catch (error) {
     console.log("error posting todays weight ", error)
@@ -45,19 +59,17 @@ export const postTodaysWeight = async (weight) => {
 
 export const logUserIn = async (payload) => {
   try {
-    const result = await axios.post(BASE_URL + "/auth", payload)
+    const result = await authAxios.post("/auth", payload)
     return result.data
   } catch (error) {
     console.log("error logging user in ", error)
   }
 }
 
-export const authenticateToken = async (payload) => {
-  // if token is valid
-  // return user data, and default weight data
+export const authenticateToken = async () => {
+  await configAxios()
   try {
-    const result = await axios.post(BASE_URL + "/auth-token", payload)
-    console.log(result.data)
+    const result = await authAxios.post("/auth-token")
     return result.data
   } catch (error) {
     console.log("error authenticating token, try logging in ", error)
