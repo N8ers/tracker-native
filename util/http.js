@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosRequestConfig } from "axios"
 
 const IS_PROD = false
 const BASE_URL = IS_PROD
@@ -13,6 +13,16 @@ const BASE_URL = IS_PROD
  * Let UI add todays weight
  */
 const USER_ID = 1
+
+axios.interceptors.request.use(
+  (config) => {
+    config.headers.authorization = `Bearer ${accessToken}`
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 export const fetchWeights = async () => {
   try {
@@ -39,5 +49,17 @@ export const logUserIn = async (payload) => {
     return result.data
   } catch (error) {
     console.log("error logging user in ", error)
+  }
+}
+
+export const authenticateToken = async (payload) => {
+  // if token is valid
+  // return user data, and default weight data
+  try {
+    const result = await axios.post(BASE_URL + "/auth-token", payload)
+    console.log(result.data)
+    return result.data
+  } catch (error) {
+    console.log("error authenticating token, try logging in ", error)
   }
 }

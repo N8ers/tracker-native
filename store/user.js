@@ -12,8 +12,17 @@ const initState = {
 }
 
 export const authToken = createAsyncThunk("user/authToken", async () => {
+  // what should i do about loading spinner here?
+  // maybe use the https://www.npmjs.com/package/expo-splash-screen lib?
   const storedToken = await getToken("token")
-  console.log("token ? ", storedToken)
+
+  if (storedToken) {
+    "user/authToken",
+      async () => {
+        const response = await http.authenticateToken({ storedToken })
+        console.log("user/authToken response:: ", response)
+      }
+  }
 })
 
 export const authUser = createAsyncThunk(
