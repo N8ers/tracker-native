@@ -22,12 +22,11 @@ export default function ScreensWrapper() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log("check if user token is valid - then fire fetchWeights")
     dispatch(authToken())
     if (isLoggedIn) {
       dispatch(fetchWeights())
     }
-  }, [])
+  }, [isLoggedIn])
 
   return (
     <>

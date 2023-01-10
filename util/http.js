@@ -9,7 +9,6 @@ import { getToken } from "../util/deviceStorage"
  * NOW we need to make a chart
  * Let UI add todays weight
  */
-const USER_ID = 1
 
 const IS_PROD = false
 
@@ -29,18 +28,9 @@ const configAxios = async () => {
   })
 }
 
-// const authAxios = axios.create({
-//   baseURL: IS_PROD
-//     ? "https://tracker-api-production-ec2a.up.railway.app"
-//     : "http://localhost:4000",
-//   headers: {
-//     Authorization: `Bearer 3666`,
-//   },
-// })
-
 export const fetchWeights = async () => {
   try {
-    const result = await authAxios.get("/weights/" + USER_ID)
+    const result = await authAxios.get("/weights")
     return result.data
   } catch (error) {
     console.log("error getting data ", error)
@@ -49,8 +39,7 @@ export const fetchWeights = async () => {
 
 export const postTodaysWeight = async (weight) => {
   try {
-    const data = { userId: USER_ID, weight }
-    const result = await authAxios.post("/todays-weight", data)
+    const result = await authAxios.post("/todays-weight", { weight })
     return result.data
   } catch (error) {
     console.log("error posting todays weight ", error)
