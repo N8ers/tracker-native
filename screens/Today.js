@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Text, View, StyleSheet, Modal, Button, TextInput } from "react-native"
 
@@ -8,6 +8,22 @@ export default function Today() {
   const dispatch = useDispatch()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [weight, setWeight] = useState(0)
+  const [todaysDate, setTodaysDate] = useState("")
+
+  const calculateTodaysDate = () => {
+    let date = new Date()
+    date = date.toLocaleDateString("default", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    })
+
+    setTodaysDate(date)
+  }
+
+  useEffect(() => {
+    calculateTodaysDate()
+  }, [])
 
   const addWeight = () => {
     dispatch(addTodaysWeight({ weight }))
@@ -18,6 +34,7 @@ export default function Today() {
     <View style={styles.pageContainer}>
       <View style={styles.container}>
         <Text>Add Todays Stats!</Text>
+        <Text>{todaysDate}</Text>
         <View style={styles.buttonContainer}>
           <Button title="Add" onPress={() => setIsModalVisible(true)} />
         </View>
