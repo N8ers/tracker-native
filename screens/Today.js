@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Text, View, StyleSheet, Modal, Button, TextInput } from "react-native"
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { addTodaysWeight } from "../store/weights"
 
 export default function Today() {
+  const weights = useSelector((state) => state.weight.weights)
+
   const dispatch = useDispatch()
+
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [weight, setWeight] = useState(0)
   const [todaysDate, setTodaysDate] = useState("")
+  const [isTodayRecorded, setIsTodayRecorded] = useState(false)
 
   const calculateTodaysDate = () => {
     let date = new Date()
@@ -22,6 +27,34 @@ export default function Today() {
   }
 
   useEffect(() => {
+    /**
+     * This logic is kinda complex and muddies up the component.
+     * Consider having the API handle it.
+     */
+    if (weights.length) {
+      let today = new Date()
+      today = today.toLocaleDateString("default", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+
+      for (const weight of weights) {
+        let dateInQuestion = new Date(weight.date)
+        dateInQuestion = dateInQuestion.toLocaleDateString("default", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })
+        if (today === dateInQuestion) {
+          setIsTodayRecorded(true)
+          break
+        }
+      }
+    }
+  }, [weights])
+
+  useEffect(() => {
     calculateTodaysDate()
   }, [])
 
@@ -33,11 +66,28 @@ export default function Today() {
   return (
     <View style={styles.pageContainer}>
       <View style={styles.container}>
-        <Text>Add Todays Stats!</Text>
         <Text>{todaysDate}</Text>
-        <View style={styles.buttonContainer}>
-          <Button title="Add" onPress={() => setIsModalVisible(true)} />
-        </View>
+
+        {isTodayRecorded ? (
+          <View>
+            <Text>You recorded today's weight!</Text>
+            <View style={styles.checkMark}>
+              <MaterialCommunityIcons name="check" color="white" size="100" />
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <Button
+                title="update weight"
+                onPress={() => setIsModalVisible(true)}
+              />
+            </View>
+          </View>
+        ) : (
+          <View>
+            <Text>Add Todays Stats!</Text>
+            <Text>Add an input here</Text>
+          </View>
+        )}
       </View>
 
       <Modal animationType="slide" visible={isModalVisible}>
@@ -74,6 +124,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     paddingBottom: 20,
+  },
+  checkMark: {
+    height: 100,
+    width: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "green",
+    borderRadius: 50,
   },
   modalView: {
     flex: 1,
