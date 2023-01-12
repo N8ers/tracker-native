@@ -60,7 +60,12 @@ export default function Today() {
 
   const addWeight = () => {
     dispatch(addTodaysWeight({ weight }))
-    setIsModalVisible(false)
+    // setIsModalVisible(false)
+  }
+
+  const updateWeight = (weight) => {
+    // TODO
+    console.log("new weight ", weight)
   }
 
   return (
@@ -84,8 +89,14 @@ export default function Today() {
           </View>
         ) : (
           <View>
-            <Text>Add Todays Stats!</Text>
-            <Text>Add an input here</Text>
+            <Text>Add Todays weight!</Text>
+            <TextInput
+              style={styles.numberInput}
+              defaultValue={weight}
+              onChangeText={(newWeight) => setWeight(newWeight)}
+              keyboardType="numeric"
+            />
+            <Button title="add" onPress={addWeight} />
           </View>
         )}
       </View>
@@ -96,7 +107,7 @@ export default function Today() {
           <TextInput
             style={styles.numberInput}
             defaultValue={weight}
-            onChangeText={(newWeight) => setWeight(newWeight)}
+            onChangeText={(newWeight) => updateWeight(newWeight)}
             keyboardType="numeric"
           />
 
