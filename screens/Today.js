@@ -3,17 +3,16 @@ import { useDispatch, useSelector } from "react-redux"
 import { Text, View, StyleSheet, Modal, Button, TextInput } from "react-native"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
-import { addTodaysWeight } from "../store/weights"
+import { addTodaysWeight, getTodaysWeight } from "../store/weights"
 
 export default function Today() {
-  const weights = useSelector((state) => state.weight.weights)
+  const todaysWeight = useSelector((state) => state.weight.todaysWeight)
 
   const dispatch = useDispatch()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [weight, setWeight] = useState(0)
   const [todaysDate, setTodaysDate] = useState("")
-  const [isTodayRecorded, setIsTodayRecorded] = useState(false)
 
   const calculateTodaysDate = () => {
     let date = new Date()
@@ -27,35 +26,8 @@ export default function Today() {
   }
 
   useEffect(() => {
-    /**
-     * This logic is kinda complex and muddies up the component.
-     * Consider having the API handle it.
-     */
-    if (weights.length) {
-      let today = new Date()
-      today = today.toLocaleDateString("default", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
-
-      for (const weight of weights) {
-        let dateInQuestion = new Date(weight.date)
-        dateInQuestion = dateInQuestion.toLocaleDateString("default", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        })
-        if (today === dateInQuestion) {
-          setIsTodayRecorded(true)
-          break
-        }
-      }
-    }
-  }, [weights])
-
-  useEffect(() => {
     calculateTodaysDate()
+    dispatch(getTodaysWeight())
   }, [])
 
   const addWeight = () => {
@@ -72,8 +44,9 @@ export default function Today() {
     <View style={styles.pageContainer}>
       <View style={styles.container}>
         <Text>{todaysDate}</Text>
+        <Text>TodaysWeight: {todaysWeight}</Text>
 
-        {isTodayRecorded ? (
+        {todaysWeight ? (
           <View>
             <Text>You recorded today's weight!</Text>
             <View style={styles.checkMark}>

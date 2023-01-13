@@ -37,6 +37,15 @@ export const fetchWeights = async () => {
   }
 }
 
+export const getTodaysWeight = async (weight) => {
+  try {
+    const result = await authAxios.get("/todays-weight")
+    return result.data
+  } catch (error) {
+    console.log("error posting todays weight ", error)
+  }
+}
+
 export const postTodaysWeight = async (weight) => {
   try {
     const result = await authAxios.post("/todays-weight", { weight })
