@@ -11,6 +11,7 @@ const chartConfig = {
 }
 
 export default function ProgressChart() {
+  const isLoading = useSelector((state) => state.weight.loading)
   const weightsDesc = useSelector((state) => state.weight.weights)
   const weights = weightsDesc.slice().reverse()
 
@@ -48,22 +49,24 @@ export default function ProgressChart() {
 
   return (
     <View>
-      <LineChart
-        data={data}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-        verticalLabelRotation={0}
-        formatXLabel={(value) => {
-          const month = value.split("-")[1]
-          const monthAsDate = new Date(value)
-          const monthName = monthAsDate.toLocaleString("default", {
-            month: "short",
-            day: "numeric",
-          })
-          return value === firstDateOfMonth[month] ? monthName : ""
-        }}
-      />
+      {!isLoading && (
+        <LineChart
+          data={data}
+          width={screenWidth}
+          height={220}
+          chartConfig={chartConfig}
+          verticalLabelRotation={0}
+          formatXLabel={(value) => {
+            const month = value.split("-")[1]
+            const monthAsDate = new Date(value)
+            const monthName = monthAsDate.toLocaleString("default", {
+              month: "short",
+              day: "numeric",
+            })
+            return value === firstDateOfMonth[month] ? monthName : ""
+          }}
+        />
+      )}
     </View>
   )
 }

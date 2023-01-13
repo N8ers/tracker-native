@@ -8,7 +8,6 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { StyleSheet, View, ActivityIndicator } from "react-native"
 
-import { fetchWeights } from "../store/weights"
 import { authToken } from "../store/user"
 
 import NotAuthenticatedNavigator from "../navigators/NotAuthenticatedNavigator"
@@ -23,10 +22,7 @@ export default function ScreensWrapper() {
 
   useEffect(() => {
     dispatch(authToken())
-    if (isLoggedIn) {
-      dispatch(fetchWeights())
-    }
-  }, [isLoggedIn])
+  }, [])
 
   return (
     <>
