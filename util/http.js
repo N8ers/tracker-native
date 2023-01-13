@@ -1,6 +1,7 @@
 import axios from "axios"
 
 import { getToken } from "../util/deviceStorage"
+import { showErrorToast } from "../util/toasts"
 
 /**
  * TODO
@@ -33,7 +34,10 @@ export const fetchWeights = async () => {
     const result = await authAxios.get("/weights")
     return result.data
   } catch (error) {
-    console.log("error getting data ", error)
+    showErrorToast({
+      headerText: "There was an error getting weights.",
+      subText: error.message,
+    })
   }
 }
 
@@ -42,7 +46,10 @@ export const getTodaysWeight = async (weight) => {
     const result = await authAxios.get("/todays-weight")
     return result.data
   } catch (error) {
-    console.log("error posting todays weight ", error)
+    showErrorToast({
+      headerText: "Error getting todays weight. Please try again.",
+      subText: error.message,
+    })
   }
 }
 
@@ -51,7 +58,10 @@ export const postTodaysWeight = async (weight) => {
     const result = await authAxios.post("/todays-weight", { weight })
     return result.data
   } catch (error) {
-    console.log("error posting todays weight ", error)
+    showErrorToast({
+      headerText: "Error adding todays weight. Please try again.",
+      subText: error.message,
+    })
   }
 }
 
@@ -60,7 +70,10 @@ export const patchTodaysWeight = async (weight) => {
     const result = await authAxios.patch("/todays-weight", { weight })
     return result.data
   } catch (error) {
-    console.log("error patching todays weight ", error)
+    showErrorToast({
+      headerText: "Error updating todays weight. Please try again.",
+      subText: error.message,
+    })
   }
 }
 
@@ -69,7 +82,10 @@ export const logUserIn = async (payload) => {
     const result = await authAxios.post("/auth", payload)
     return result.data
   } catch (error) {
-    console.log("error logging user in ", error)
+    showErrorToast({
+      headerText: "Login failed. Please try again.",
+      subText: error.message,
+    })
   }
 }
 
@@ -79,6 +95,9 @@ export const authenticateToken = async () => {
     const result = await authAxios.post("/auth-token")
     return result.data
   } catch (error) {
-    console.log("error authenticating token, try logging in ", error)
+    // showErrorToast({
+    //   headerText: "Auth token failed. Please login.",
+    //   subText: error.message,
+    // })
   }
 }
