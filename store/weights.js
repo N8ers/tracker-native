@@ -26,6 +26,14 @@ export const addTodaysWeight = createAsyncThunk(
   }
 )
 
+export const updateTodaysWeight = createAsyncThunk(
+  "weight/patchTodaysWeight",
+  async ({ weight }) => {
+    const response = await http.patchTodaysWeight(weight)
+    return response
+  }
+)
+
 const weightsSlice = createSlice({
   name: "weights",
   initialState: {
@@ -71,8 +79,22 @@ const weightsSlice = createSlice({
       })
       .addCase(getTodaysWeight.fulfilled, (state, action) => {
         state.todaysWeight = action.payload
+        state.loading = false
       })
       .addCase(getTodaysWeight.rejected, (state) => {
+        state.loading = false
+        state.error = "ERROR!!!!!"
+      })
+    builder
+      .addCase(updateTodaysWeight.pending, (state) => {
+        state.loading = true
+        state.error = false
+      })
+      .addCase(updateTodaysWeight.fulfilled, (state, action) => {
+        state.todaysWeight = action.payload.weight
+        state.loading = false
+      })
+      .addCase(updateTodaysWeight.rejected, (state) => {
         state.loading = false
         state.error = "ERROR!!!!!"
       })

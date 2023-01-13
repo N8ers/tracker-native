@@ -55,6 +55,15 @@ export const postTodaysWeight = async (weight) => {
   }
 }
 
+export const patchTodaysWeight = async (weight) => {
+  try {
+    const result = await authAxios.patch("/todays-weight", { weight })
+    return result.data
+  } catch (error) {
+    console.log("error patching todays weight ", error)
+  }
+}
+
 export const logUserIn = async (payload) => {
   try {
     const result = await authAxios.post("/auth", payload)

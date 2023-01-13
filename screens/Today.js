@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { Text, View, StyleSheet, Modal, Button, TextInput } from "react-native"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
-import { addTodaysWeight, getTodaysWeight } from "../store/weights"
+import {
+  addTodaysWeight,
+  getTodaysWeight,
+  updateTodaysWeight,
+} from "../store/weights"
 
 export default function Today() {
   const todaysWeight = useSelector((state) => state.weight.todaysWeight)
@@ -32,26 +36,29 @@ export default function Today() {
 
   const addWeight = () => {
     dispatch(addTodaysWeight({ weight }))
-    // setIsModalVisible(false)
   }
 
-  const updateWeight = (weight) => {
-    // TODO
-    console.log("new weight ", weight)
+  const updateWeight = () => {
+    const trimmedWeight = weight.trim()
+    if (trimmedWeight.length) {
+      dispatch(updateTodaysWeight({ weight: trimmedWeight }))
+      setIsModalVisible(false)
+      setWeight(0)
+    }
   }
 
   return (
     <View style={styles.pageContainer}>
       <View style={styles.container}>
         <Text>{todaysDate}</Text>
-        <Text>TodaysWeight: {todaysWeight}</Text>
 
         {todaysWeight ? (
-          <View>
-            <Text>You recorded today's weight!</Text>
+          <View style={styles.checkMarkContainer}>
             <View style={styles.checkMark}>
               <MaterialCommunityIcons name="check" color="white" size="100" />
             </View>
+            <Text>You recorded today's weight!</Text>
+            <Text>Todays weight: {todaysWeight}</Text>
 
             <View style={styles.buttonContainer}>
               <Button
@@ -76,17 +83,18 @@ export default function Today() {
 
       <Modal animationType="slide" visible={isModalVisible}>
         <View style={styles.modalView}>
-          <Text>hi, record todays weight</Text>
+          <Text>Update todays weight.</Text>
+          <Text>Current record for today is {todaysWeight} lbs.</Text>
           <TextInput
             style={styles.numberInput}
             defaultValue={weight}
-            onChangeText={(newWeight) => updateWeight(newWeight)}
+            onChangeText={(newWeight) => setWeight(newWeight)}
             keyboardType="numeric"
           />
 
           <View style={styles.buttonGroup}>
             <Button title="cancel" onPress={() => setIsModalVisible(false)} />
-            <Button title="add" onPress={addWeight} />
+            <Button title="update" onPress={updateWeight} />
           </View>
         </View>
       </Modal>
@@ -107,13 +115,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    paddingBottom: 20,
+    paddingBottom: 50,
+  },
+  checkMarkContainer: {
+    marginTop: 50,
+    justifyContent: "center",
+    alignItems: "center",
   },
   checkMark: {
     height: 100,
     width: 100,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "green",
     borderRadius: 50,
   },
