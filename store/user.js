@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import * as http from "../util/http"
-import { setToken, getToken, removeToken } from "../util/deviceStorage"
+import { setToken, removeToken } from "../util/deviceStorage"
+import { showSuccessToast } from "../util/toasts"
 
 const initState = {
   isLoggedIn: false,
@@ -33,6 +34,7 @@ const userSlice = createSlice({
   reducers: {
     logout: () => {
       removeToken(null)
+      showSuccessToast({ headerText: "You logged out successfully." })
       return initState
     },
   },

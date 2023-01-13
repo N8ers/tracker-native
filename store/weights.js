@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import * as http from "../util/http"
+import { showSuccessToast } from "../util/toasts"
 
 export const fetchWeights = createAsyncThunk(
   "weight/fetchWeights",
@@ -67,6 +68,7 @@ const weightsSlice = createSlice({
       .addCase(addTodaysWeight.fulfilled, (state, action) => {
         state.todaysWeight = action.payload.weight
         state.loading = false
+        showSuccessToast({ headerText: "Added todays weight!" })
       })
       .addCase(addTodaysWeight.rejected, (state) => {
         state.loading = false
@@ -93,10 +95,10 @@ const weightsSlice = createSlice({
       .addCase(updateTodaysWeight.fulfilled, (state, action) => {
         state.todaysWeight = action.payload.weight
         state.loading = false
+        showSuccessToast({ headerText: "Updated todays weight!" })
       })
       .addCase(updateTodaysWeight.rejected, (state) => {
         state.loading = false
-        state.error = "ERROR!!!!!"
       })
   },
 })
