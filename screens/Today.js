@@ -50,15 +50,17 @@ export default function Today() {
   return (
     <View style={styles.pageContainer}>
       <View style={styles.container}>
-        <Text>{todaysDate}</Text>
+        <Text style={styles.todaysDate}>{todaysDate}</Text>
 
         {todaysWeight ? (
           <View style={styles.checkMarkContainer}>
             <View style={styles.checkMark}>
               <MaterialCommunityIcons name="check" color="white" size="100" />
             </View>
-            <Text>You recorded today's weight!</Text>
-            <Text>Todays weight: {todaysWeight}</Text>
+            <View style={styles.textContainer}>
+              <Text>You recorded today's weight!</Text>
+              <Text>Todays weight: {todaysWeight}</Text>
+            </View>
 
             <View style={styles.buttonContainer}>
               <Button
@@ -68,7 +70,7 @@ export default function Today() {
             </View>
           </View>
         ) : (
-          <View>
+          <View style={styles.notRecordedContainer}>
             <Text>Add Todays weight!</Text>
             <TextInput
               style={styles.numberInput}
@@ -112,13 +114,25 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  notRecordedContainer: {
+    flex: 1,
+    alignItems: "center",
+  },
+  todaysDate: {
+    fontSize: 20,
+    marginBottom: 100,
+  },
+  textContainer: {
+    marginTop: 10,
+    flex: 1,
+    alignItems: "center",
+  },
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    paddingBottom: 50,
+    paddingBottom: 150,
   },
   checkMarkContainer: {
-    marginTop: 50,
     justifyContent: "center",
     alignItems: "center",
   },
