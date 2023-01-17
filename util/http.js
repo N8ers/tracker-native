@@ -11,7 +11,7 @@ import { showErrorToast } from "../util/toasts"
  * Let UI add todays weight
  */
 
-const IS_PROD = false
+const IS_PROD = process.env.NODE_ENV === "production"
 
 let authAxios
 
