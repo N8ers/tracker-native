@@ -29,6 +29,7 @@ export default function AuthenticatedNavigator() {
           name="Home"
           component={Home}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={size} />
             ),
@@ -38,6 +39,7 @@ export default function AuthenticatedNavigator() {
           name="Today"
           component={Today}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
                 name="calendar-today"
@@ -51,6 +53,7 @@ export default function AuthenticatedNavigator() {
           name="Progress"
           component={ProgressNavigator}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
                 name="chart-timeline-variant-shimmer"
@@ -64,6 +67,8 @@ export default function AuthenticatedNavigator() {
           name="Settings"
           component={Settings}
           options={{
+            headerShown: false,
+
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
                 name="cog-outline"

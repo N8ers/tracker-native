@@ -10,11 +10,12 @@ const BottomTab = createBottomTabNavigator()
 export default function NotAuthenticatedNavigator() {
   return (
     <NavigationContainer>
-      <BottomTab.Navigator initialRouteName="Today">
+      <BottomTab.Navigator>
         <BottomTab.Screen
           name="Home"
           component={Home}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={size} />
             ),
@@ -24,6 +25,7 @@ export default function NotAuthenticatedNavigator() {
           name="Auth"
           component={Auth}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="login" color={color} size={size} />
             ),
