@@ -37,6 +37,9 @@ const userSlice = createSlice({
       showSuccessToast({ headerText: "You logged out successfully." })
       return initState
     },
+    toggleDarkMode: (state, payload) => {
+      state.darkmode = payload.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -76,6 +79,6 @@ const userSlice = createSlice({
   },
 })
 
-export const { logout } = userSlice.actions
+export const { logout, toggleDarkMode } = userSlice.actions
 
 export default userSlice.reducer
