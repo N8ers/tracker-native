@@ -24,7 +24,16 @@ function ProgressNavigator() {
 export default function AuthenticatedNavigator() {
   return (
     <NavigationContainer>
-      <BottomTab.Navigator initialRouteName="Today">
+      <BottomTab.Navigator
+        initialRouteName="Today"
+        sceneContainerStyle={{ backgroundColor: "#151718" }}
+        screenOptions={{
+          tabBarActiveTintColor: "#B3FFE0",
+          tabBarInactiveTintColor: "#FFF",
+          tabBarActiveBackgroundColor: "#282A2C",
+          tabBarInactiveBackgroundColor: "#282A2C",
+        }}
+      >
         <BottomTab.Screen
           name="Home"
           component={Home}
