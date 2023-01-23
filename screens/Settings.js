@@ -1,25 +1,14 @@
-import { useEffect, useState } from "react"
 import { Text, View, Button, Switch } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 
 import { logout, toggleDarkMode } from "../store/user"
-
-import { darkmode, lightmode } from "../Styles"
+import { useThemes } from "../hooks/useThemes"
 
 export default function Settings() {
   const userData = useSelector((state) => state.user)
 
-  const [themes, setTheme] = useState(darkmode)
-
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (userData.darkmode) {
-      setTheme(darkmode)
-    } else {
-      setTheme(lightmode)
-    }
-  }, [userData.darkmode])
+  const themes = useThemes()
 
   function handleLogout() {
     dispatch(logout())
