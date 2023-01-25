@@ -1,7 +1,8 @@
-import { Text, View, Button, Switch } from "react-native"
+import { Text, Button, Switch } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 
 import { logout, toggleDarkMode } from "../store/user"
+import { ContentWrapper } from "../components/ContentWrapper"
 import { useThemes } from "../hooks/useThemes"
 
 export default function Settings() {
@@ -19,12 +20,16 @@ export default function Settings() {
   }
 
   return (
-    <View>
-      <Text style={themes.action}>Settings</Text>
-      <Text>Username: {userData.username}</Text>
-      <Text>Darkmode: {userData.darkmode.toString()}</Text>
-      <Switch onValueChange={toggleSwitch} value={userData.darkmode} />
+    <>
+      <ContentWrapper>
+        <Text style={themes.action}>Settings</Text>
+        <Text>Username: {userData.username}</Text>
+        <Text>Darkmode: {userData.darkmode.toString()}</Text>
+        <Switch onValueChange={toggleSwitch} value={userData.darkmode} />
+        <Button title="Update" />
+      </ContentWrapper>
+
       <Button title="logout" onPress={handleLogout} />
-    </View>
+    </>
   )
 }
