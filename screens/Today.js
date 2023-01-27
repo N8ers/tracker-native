@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Text, View, StyleSheet, Modal, Button, TextInput } from "react-native"
+import { View, StyleSheet, Modal } from "react-native"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+
+import { AppText } from "../components/AppText"
+import { AppButton } from "../components/AppButton"
+import { ContentWrapper } from "../components/ContentWrapper"
+
+import { useThemes } from "../hooks/useThemes"
 
 import {
   addTodaysWeight,
@@ -11,6 +17,9 @@ import {
 
 export default function Today() {
   const todaysWeight = useSelector((state) => state.weight.todaysWeight)
+  console.log({ todaysWeight })
+
+  const themes = useThemes()
 
   const dispatch = useDispatch()
 
@@ -47,116 +56,64 @@ export default function Today() {
     }
   }
 
-  return (
-    <View style={styles.pageContainer}>
-      <View style={styles.container}>
-        <Text style={styles.todaysDate}>{todaysDate}</Text>
+  const openModal = () => {
+    console.log("pressed!")
+  }
 
-        {todaysWeight ? (
-          <View style={styles.checkMarkContainer}>
-            <View style={styles.checkMark}>
-              <MaterialCommunityIcons name="check" color="white" size="100" />
-            </View>
-            <View style={styles.textContainer}>
-              <Text>You recorded today's weight!</Text>
-              <Text>Todays weight: {todaysWeight}</Text>
-            </View>
+  const NotRecoredMessage = (
+    <AppText style={styles.text}>
+      You haven't recorded todays weight yet.
+    </AppText>
+  )
 
-            <View style={styles.buttonContainer}>
-              <Button
-                title="update weight"
-                onPress={() => setIsModalVisible(true)}
-              />
-            </View>
-          </View>
-        ) : (
-          <View style={styles.notRecordedContainer}>
-            <Text>Add Todays weight!</Text>
-            <TextInput
-              style={styles.numberInput}
-              defaultValue={weight}
-              onChangeText={(newWeight) => setWeight(newWeight)}
-              keyboardType="numeric"
-            />
-            <Button title="add" onPress={addWeight} />
-          </View>
-        )}
+  const RecoredMessage = (
+    <View>
+      <View style={styles.checkMark}>
+        <MaterialCommunityIcons
+          name="check-circle"
+          color={themes.secondary.color}
+          size="180"
+        />
       </View>
 
-      <Modal animationType="slide" visible={isModalVisible}>
-        <View style={styles.modalView}>
-          <Text>Update todays weight.</Text>
-          <Text>Current record for today is {todaysWeight} lbs.</Text>
-          <TextInput
-            style={styles.numberInput}
-            defaultValue={weight}
-            onChangeText={(newWeight) => setWeight(newWeight)}
-            keyboardType="numeric"
-          />
-
-          <View style={styles.buttonGroup}>
-            <Button title="cancel" onPress={() => setIsModalVisible(false)} />
-            <Button title="update" onPress={updateWeight} />
-          </View>
-        </View>
-      </Modal>
+      <AppText style={styles.text}>
+        You recoreded todays weight as ___ (lbs)!!
+      </AppText>
     </View>
+  )
+
+  const NotRecordedButton = (
+    <AppButton title="Track Todays Weight" onPress={openModal} />
+  )
+
+  const UpdateButton = (
+    <AppButton title="Change Todays Weight" onPress={openModal} />
+  )
+
+  return (
+    <>
+      <ContentWrapper>
+        <AppText style={styles.todaysDate}>{todaysDate}</AppText>
+
+        {todaysWeight ? RecoredMessage : NotRecoredMessage}
+      </ContentWrapper>
+      {todaysWeight ? UpdateButton : NotRecordedButton}
+    </>
   )
 }
 
 const styles = StyleSheet.create({
-  pageContainer: {
-    flex: 1,
-    paddingTop: 50,
-    alignItems: "center",
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  notRecordedContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
   todaysDate: {
     fontSize: 20,
-    marginBottom: 100,
-  },
-  textContainer: {
-    marginTop: 10,
-    flex: 1,
-    alignItems: "center",
-  },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    paddingBottom: 150,
-  },
-  checkMarkContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    fontWeight: "bold",
+    marginBottom: 20,
   },
   checkMark: {
-    height: 100,
-    width: 100,
-    backgroundColor: "green",
-    borderRadius: 50,
-  },
-  modalView: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  numberInput: {
-    height: 50,
-    width: 100,
-    textAlign: "center",
-    fontSize: 32,
-    borderBottomColor: "black",
-    borderBottomWidth: 2,
-  },
-  buttonGroup: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+  text: {
+    marginTop: 20,
+    fontWeight: "bold",
   },
 })

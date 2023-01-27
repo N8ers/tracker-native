@@ -6,7 +6,8 @@ export const darkmode = StyleSheet.create({
   lightBackground: "#282A2C",
   action: "#FDF485",
   action: { color: "#FDF485" },
-  location: "#B3FFE0",
+  actionBackground: { backgroundColor: "#FDF485" },
+  secondary: { color: "#B3FFE0" },
 })
 
 export const lightmode = StyleSheet.create({
@@ -14,5 +15,6 @@ export const lightmode = StyleSheet.create({
   text: { color: "black" },
   lightBackground: "#CCC",
   action: { color: "#6bc492" },
-  location: "#c46bbe",
+  actionBackground: { backgroundColor: "#6bc492" },
+  secondary: "#c46bbe",
 })
