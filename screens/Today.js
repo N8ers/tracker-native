@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { View, StyleSheet, Modal } from "react-native"
+import { View, StyleSheet } from "react-native"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { AppText } from "../components/AppText"
@@ -56,10 +56,6 @@ export default function Today() {
     }
   }
 
-  const openModal = () => {
-    console.log("pressed!")
-  }
-
   const NotRecoredMessage = (
     <AppText style={styles.text}>
       You haven't recorded todays weight yet.
@@ -82,6 +78,10 @@ export default function Today() {
     </View>
   )
 
+  const openModal = () => {
+    console.log("pressed!")
+  }
+
   const NotRecordedButton = (
     <AppButton title="Track Todays Weight" onPress={openModal} />
   )
@@ -91,18 +91,24 @@ export default function Today() {
   )
 
   return (
-    <>
+    <View style={styles.container}>
       <ContentWrapper>
         <AppText style={styles.todaysDate}>{todaysDate}</AppText>
 
         {todaysWeight ? RecoredMessage : NotRecoredMessage}
       </ContentWrapper>
-      {todaysWeight ? UpdateButton : NotRecordedButton}
-    </>
+
+      <View style={styles.buttonContainer}>
+        {todaysWeight ? UpdateButton : NotRecordedButton}
+      </View>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   todaysDate: {
     fontSize: 20,
     fontWeight: "bold",
@@ -115,5 +121,10 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 20,
     fontWeight: "bold",
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingBottom: 20,
   },
 })
