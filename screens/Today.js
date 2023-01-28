@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { View, StyleSheet, Modal, Pressable } from "react-native"
+import { View, StyleSheet } from "react-native"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { AppText } from "../components/AppText"

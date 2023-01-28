@@ -3,15 +3,17 @@ import { Modal, View, StyleSheet } from "react-native"
 import { AppText } from "./AppText"
 import { AppButton } from "./AppButton"
 
-import { useThemes } from "../hooks/useThemes"
+import { AppInput } from "./AppInput"
+import { useState } from "react"
 
 export function TodayModal({ isModalVisible, closeModal, todaysWeight }) {
-  const themes = useThemes()
+  const [weight, setWeight] = useState(todaysWeight)
 
   const UpdateWeight = (
     <View>
       <AppText>Today's weight is currently {todaysWeight} (lbs)</AppText>
-      <AppText>____input goes here____</AppText>
+      <AppInput value={todaysWeight} />
+
       <View>
         <AppButton title="Cancel" onPress={closeModal} />
         <AppButton title="Update" />
@@ -22,7 +24,11 @@ export function TodayModal({ isModalVisible, closeModal, todaysWeight }) {
   const RecordWeight = (
     <View>
       <AppText>Record todays weight!</AppText>
-      <AppText>____input goes here____</AppText>
+      <AppInput
+        value={weight}
+        onChangeText={(newValue) => setWeight(newValue)}
+      />
+
       <View>
         <AppButton title="Cancel" onPress={closeModal} />
         <AppButton title="Record" />
@@ -42,7 +48,7 @@ export function TodayModal({ isModalVisible, closeModal, todaysWeight }) {
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          {!todaysWeight ? UpdateWeight : RecordWeight}
+          {todaysWeight ? UpdateWeight : RecordWeight}
         </View>
       </View>
     </Modal>
