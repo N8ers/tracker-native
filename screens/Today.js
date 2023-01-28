@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Modal, Pressable } from "react-native"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { AppText } from "../components/AppText"
 import { AppButton } from "../components/AppButton"
+import { TodayModal } from "../components/TodayModal"
 import { ContentWrapper } from "../components/ContentWrapper"
 
 import { useThemes } from "../hooks/useThemes"
@@ -17,7 +18,6 @@ import {
 
 export default function Today() {
   const todaysWeight = useSelector((state) => state.weight.todaysWeight)
-  console.log({ todaysWeight })
 
   const themes = useThemes()
 
@@ -79,7 +79,7 @@ export default function Today() {
   )
 
   const openModal = () => {
-    console.log("pressed!")
+    setIsModalVisible(true)
   }
 
   const NotRecordedButton = (
@@ -101,6 +101,16 @@ export default function Today() {
       <View style={styles.buttonContainer}>
         {todaysWeight ? UpdateButton : NotRecordedButton}
       </View>
+
+      <AppText>{isModalVisible}</AppText>
+
+      {isModalVisible && (
+        <TodayModal
+          todaysWeight={todaysWeight}
+          isModalVisible={isModalVisible}
+          closeModal={() => setIsModalVisible(false)}
+        />
+      )}
     </View>
   )
 }
