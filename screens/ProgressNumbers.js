@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { FlatList, SafeAreaView, Text, View } from "react-native"
+import { FlatList, SafeAreaView, Text, View, StyleSheet } from "react-native"
 
 import { fetchWeights } from "../store/weights"
 import { useEffect } from "react"
@@ -18,15 +18,20 @@ export default function ProgressChart() {
     <View>
       {!isLoading && (
         <View>
-          <Text>I would be a drop down month selector</Text>
+          <Text style={styles.rangeSelector}>
+            I will be a drop down month selector
+          </Text>
 
           <SafeAreaView>
             <FlatList
               data={weights}
               renderItem={({ item }) => (
-                <View>
-                  <Text>
-                    {item.date.split("T")[0]} - {item.weight}
+                <View style={styles.listItemContainer}>
+                  <Text style={styles.listItem}>
+                    <Text style={styles.listItemDate}>
+                      {item.date.split("T")[0]}
+                    </Text>
+                    <Text style={styles.listItemWeight}>{item.weight}</Text>
                   </Text>
                 </View>
               )}
@@ -38,3 +43,19 @@ export default function ProgressChart() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  rangeSelector: {
+    padding: 20,
+  },
+  listItemContainer: {},
+  listItem: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 5,
+  },
+  listItemDate: {},
+  listItemWeight: {
+    marginLeft: 50,
+  },
+})
