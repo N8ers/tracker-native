@@ -2,13 +2,19 @@ import { Pressable, Text, StyleSheet } from "react-native"
 
 import { useThemes } from "../hooks/useThemes"
 
-export function AppButton({ style, title, onPress }) {
+export function AppButton({ style, title, color = "primary", onPress }) {
   const themes = useThemes()
 
   return (
     <Pressable
       onPress={onPress}
-      style={[themes.actionBackground, styles.buttonWrapper]}
+      style={[
+        color === "primary"
+          ? themes.actionBackground
+          : themes.secondaryBackground,
+        styles.buttonWrapper,
+        style,
+      ]}
     >
       <Text style={styles.title}>{title}</Text>
     </Pressable>

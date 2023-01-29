@@ -1,4 +1,4 @@
-import { Modal, View, StyleSheet } from "react-native"
+import { Modal, View, StyleSheet, Button } from "react-native"
 
 import { AppText } from "./AppText"
 import { AppButton } from "./AppButton"
@@ -14,24 +14,32 @@ export function TodayModal({ isModalVisible, closeModal, todaysWeight }) {
       <AppText>Today's weight is currently {todaysWeight} (lbs)</AppText>
       <AppInput value={todaysWeight} />
 
-      <View>
-        <AppButton title="Cancel" onPress={closeModal} />
-        <AppButton title="Update" />
+      <View style={styles.buttonGroup}>
+        <View>
+          <AppButton title="Cancel" color="secondary" onPress={closeModal} />
+        </View>
+        <View>
+          <AppButton title="Update" />
+        </View>
       </View>
     </View>
   )
 
   const RecordWeight = (
     <View>
-      <AppText>Record todays weight!</AppText>
+      <AppText style={{ fontSize: 24 }}>Record todays weight!</AppText>
       <AppInput
         value={weight}
         onChangeText={(newValue) => setWeight(newValue)}
       />
 
-      <View>
-        <AppButton title="Cancel" onPress={closeModal} />
-        <AppButton title="Record" />
+      <View style={styles.buttonGroup}>
+        <View>
+          <AppButton title="Cancel" color="secondary" onPress={closeModal} />
+        </View>
+        <View>
+          <AppButton title="Record" />
+        </View>
       </View>
     </View>
   )
@@ -69,5 +77,11 @@ const styles = StyleSheet.create({
     width: 300,
     borderRadius: 20,
     padding: 35,
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 })
