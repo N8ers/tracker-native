@@ -6,7 +6,7 @@
 
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { StyleSheet, View, ActivityIndicator } from "react-native"
+import { StyleSheet, View, ActivityIndicator, StatusBar } from "react-native"
 
 import { authToken } from "../store/user"
 
@@ -17,6 +17,7 @@ export default function ScreensWrapper() {
   const isWeightsLoading = useSelector((state) => state.weight.loading)
   const isAuthLoading = useSelector((state) => state.user.loading)
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+  const isDarkmode = useSelector((state) => state.user.darkmode)
 
   const dispatch = useDispatch()
 
@@ -26,6 +27,8 @@ export default function ScreensWrapper() {
 
   return (
     <>
+      <StatusBar barStyle={isDarkmode ? "light-content" : "dark-content"} />
+
       {!isLoggedIn && <NotAuthenticatedNavigator />}
       {isLoggedIn && <AuthenticatedNavigator />}
 
