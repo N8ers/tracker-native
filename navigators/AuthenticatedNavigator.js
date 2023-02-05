@@ -6,7 +6,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Home from "../screens/Home"
 import Today from "../screens/Today"
 import Settings from "../screens/Settings"
-import ProgressNumbers from "../screens/ProgressNumbers"
+import ProgressTable from "../screens/ProgressTable"
 import ProgressChart from "../screens/ProgressChart"
 
 const BottomTab = createBottomTabNavigator()
@@ -15,7 +15,7 @@ const TopTab = createMaterialTopTabNavigator()
 function ProgressNavigator() {
   return (
     <TopTab.Navigator>
-      <TopTab.Screen name="Numbers" component={ProgressNumbers} />
+      <TopTab.Screen name="Numbers" component={ProgressTable} />
       <TopTab.Screen name="Chart" component={ProgressChart} />
     </TopTab.Navigator>
   )

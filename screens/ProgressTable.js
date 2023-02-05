@@ -4,7 +4,7 @@ import { FlatList, SafeAreaView, Text, View, StyleSheet } from "react-native"
 import { fetchWeights } from "../store/weights"
 import { useEffect } from "react"
 
-export default function ProgressChart() {
+export default function ProgressTable() {
   const weights = useSelector((state) => state.weight.weights)
   const isLoading = useSelector((state) => state.weight.loading)
 
