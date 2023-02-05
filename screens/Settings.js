@@ -1,8 +1,9 @@
-import { Button, Switch } from "react-native"
+import { Switch } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 
 import { logout, toggleDarkMode } from "../store/user"
 import { ContentWrapper } from "../components/ContentWrapper"
+import { AppButton } from "../components/AppButton"
 import { AppText } from "../components/AppText"
 import { useThemes } from "../hooks/useThemes"
 
@@ -27,10 +28,10 @@ export default function Settings() {
         <AppText>Username: {userData.username}</AppText>
         <AppText>Darkmode: {userData.darkmode.toString()}</AppText>
         <Switch onValueChange={toggleSwitch} value={userData.darkmode} />
-        <Button title="Update" />
+        <AppButton title="Update" />
       </ContentWrapper>
 
-      <Button title="logout" onPress={handleLogout} />
+      <AppButton title="logout" color="secondary" onPress={handleLogout} />
     </>
   )
 }
