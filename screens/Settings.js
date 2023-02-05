@@ -1,4 +1,4 @@
-import { Switch } from "react-native"
+import { Switch, StyleSheet } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 
 import { logout, toggleDarkMode } from "../store/user"
@@ -24,7 +24,7 @@ export default function Settings() {
   return (
     <>
       <ContentWrapper>
-        <AppText style={themes.action}>Settings</AppText>
+        <AppText style={styles.header}>Settings</AppText>
         <AppText>Username: {userData.username}</AppText>
         <AppText>Darkmode: {userData.darkmode.toString()}</AppText>
         <Switch onValueChange={toggleSwitch} value={userData.darkmode} />
@@ -35,3 +35,10 @@ export default function Settings() {
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+})
