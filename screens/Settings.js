@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 
 import { logout, toggleDarkMode } from "../store/user"
@@ -35,7 +35,9 @@ export default function Settings() {
         <AppButton title="Update" />
       </ContentWrapper>
 
-      <AppButton title="logout" color="secondary" onPress={handleLogout} />
+      <View style={styles.buttonContainer}>
+        <AppButton title="logout" color="secondary" onPress={handleLogout} />
+      </View>
     </>
   )
 }
@@ -44,5 +46,10 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     marginBottom: 20,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingBottom: 20,
   },
 })
