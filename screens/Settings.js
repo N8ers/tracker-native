@@ -1,5 +1,6 @@
 import { View, StyleSheet } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
+import { useState } from "react"
 
 import { logout, toggleDarkMode } from "../store/user"
 
@@ -11,6 +12,8 @@ import { AppSwitch } from "../components/AppSwitch"
 
 export default function Settings() {
   const userData = useSelector((state) => state.user)
+
+  const [username, setUsername] = useState(userData.username)
 
   const dispatch = useDispatch()
 
@@ -26,7 +29,7 @@ export default function Settings() {
     <>
       <ContentWrapper>
         <AppText style={styles.header}>Settings</AppText>
-        <AppInput value={userData.username} />
+        <AppInput value={username} onChangeText={setUsername} />
         <AppSwitch
           label="darkmode"
           value={userData.darkmode}

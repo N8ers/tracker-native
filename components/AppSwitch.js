@@ -26,7 +26,7 @@ export function AppSwitch({ style, label, value, onValueChange }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "black",
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
