@@ -32,7 +32,7 @@ export default function Settings() {
           value={userData.darkmode}
           onValueChange={toggleSwitch}
         />
-        <AppButton title="Update" />
+        <AppButton style={styles.updateButton} title="Update" />
       </ContentWrapper>
 
       <View style={styles.buttonContainer}>
@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     marginBottom: 20,
+  },
+  updateButton: {
+    marginTop: 40,
   },
   buttonContainer: {
     flex: 1,
