@@ -2,7 +2,7 @@ import { View, TextInput, StyleSheet } from "react-native"
 
 import { useThemes } from "../hooks/useThemes"
 
-export function AppInput({ style, value, onChangeText }) {
+export function AppInput({ style, value, onChangeText, centerText = false }) {
   const themes = useThemes()
 
   return (
@@ -12,23 +12,20 @@ export function AppInput({ style, value, onChangeText }) {
         onChangeText={(newValue) => onChangeText(newValue)}
         value={value}
         keyboardType="numeric"
-        textAlign="center"
+        textAlign={centerText}
       />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-  },
+  container: {},
   input: {
     height: 45,
-    margin: 12,
-    fontSize: 24,
+    fontSize: 16,
     padding: 10,
     color: "white",
-    borderRadius: 20,
-    backgroundColor: "black",
+    borderRadius: 10,
+    backgroundColor: "rgba(21, 23, 24, .8)",
   },
 })

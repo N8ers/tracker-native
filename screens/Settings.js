@@ -1,16 +1,21 @@
-import { Button, Switch } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
+import { useState } from "react"
 
 import { logout, toggleDarkMode } from "../store/user"
+
 import { ContentWrapper } from "../components/ContentWrapper"
+import { AppButton } from "../components/AppButton"
 import { AppText } from "../components/AppText"
-import { useThemes } from "../hooks/useThemes"
+import { AppInput } from "../components/AppInput"
+import { AppSwitch } from "../components/AppSwitch"
 
 export default function Settings() {
   const userData = useSelector((state) => state.user)
 
+  const [username, setUsername] = useState(userData.username)
+
   const dispatch = useDispatch()
-  const themes = useThemes()
 
   function handleLogout() {
     dispatch(logout())
@@ -23,14 +28,34 @@ export default function Settings() {
   return (
     <>
       <ContentWrapper>
-        <AppText style={themes.action}>Settings</AppText>
-        <AppText>Username: {userData.username}</AppText>
-        <AppText>Darkmode: {userData.darkmode.toString()}</AppText>
-        <Switch onValueChange={toggleSwitch} value={userData.darkmode} />
-        <Button title="Update" />
+        <AppText style={styles.header}>Settings</AppText>
+        <AppInput value={username} onChangeText={setUsername} />
+        <AppSwitch
+          label="darkmode"
+          value={userData.darkmode}
+          onValueChange={toggleSwitch}
+        />
+        <AppButton style={styles.updateButton} title="Update" />
       </ContentWrapper>
 
-      <Button title="logout" onPress={handleLogout} />
+      <View style={styles.buttonContainer}>
+        <AppButton title="logout" color="secondary" onPress={handleLogout} />
+      </View>
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  updateButton: {
+    marginTop: 40,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingBottom: 20,
+  },
+})

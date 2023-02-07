@@ -12,7 +12,7 @@ export function TodayModal({ isModalVisible, closeModal, todaysWeight }) {
   const UpdateWeight = (
     <View>
       <AppText>Today's weight is currently {todaysWeight} (lbs)</AppText>
-      <AppInput value={todaysWeight} />
+      <AppInput value={todaysWeight} centerText={true} />
 
       <View style={styles.buttonGroup}>
         <View>
@@ -30,6 +30,7 @@ export function TodayModal({ isModalVisible, closeModal, todaysWeight }) {
       <AppText style={{ fontSize: 24 }}>Record todays weight!</AppText>
       <AppInput
         value={weight}
+        centerText={true}
         onChangeText={(newValue) => setWeight(newValue)}
       />
 
