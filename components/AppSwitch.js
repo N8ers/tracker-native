@@ -13,6 +13,8 @@ export function AppSwitch({ style, label, value, onValueChange }) {
         <AppText style={styles.label}>{label}</AppText>
         <Switch
           style={styles.switch}
+          trackColor={{ true: themes.lightBackground, false: "orange" }}
+          thumbColor={themes.secondary.color}
           value={value}
           onValueChange={onValueChange}
         />
