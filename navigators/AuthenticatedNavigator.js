@@ -19,6 +19,9 @@ function ProgressNavigator() {
 
   return (
     <TopTab.Navigator
+      sceneContainerStyle={{
+        backgroundColor: "#151718",
+      }}
       screenOptions={{
         tabBarStyle: {
           backgroundColor: themes.lightBackground,
