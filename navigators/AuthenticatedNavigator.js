@@ -30,6 +30,9 @@ function ProgressNavigator() {
         },
         tabBarActiveTintColor: themes.secondary.color,
         tabBarInactiveTintColor: "#FFF",
+        tabBarIndicatorStyle: {
+          backgroundColor: themes.secondary.color,
+        },
       }}
     >
       <TopTab.Screen name="Table" component={ProgressTable} />
