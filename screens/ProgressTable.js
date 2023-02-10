@@ -29,40 +29,25 @@ export default function ProgressTable() {
   }, [])
 
   const [date, setDate] = useState(new Date())
-  const [mode, setMode] = useState("date")
-  const [show, setShow] = useState(false)
-  const [text, useText] = useState("empty")
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date
-    // setShow(Platform.os == "ios")
-    setDate(currentDate)
-
-    let tempDate = new Date(currentDate)
-    let fDate =
-      tempDate.getDate() +
-      "/" +
-      (tempDate.getMonth() + 1) +
-      "/" +
-      tempDate.getFullYear()
-    let fTime =
-      "Hours: " + tempDate.getHours() + " | Minutes: " + tempDate.getMinutes()
-    setText(fDate + "\n" + fTime)
-    console.log(fDate + " (" + fTime + ")")
-  }
-
-  const showMode = (currnetMode) => {
-    setShow(true)
-    setMode(currnetMode)
-  }
-
-  const openCalendar = (selectedCalendar) => {
-    console.log({ selectedCalendar })
-    // setStartRangeIsOpen(true)
+  const openCalendar = (event, date) => {
+    console.log(date)
+    // setDate()
   }
 
   return (
     <View>
+      <DateTimePicker
+        testId="dateTimePicker"
+        value={date}
+        mode={"date"}
+        is24Hour={true}
+        display="default"
+        format={"YYYY/MM/DD"}
+        displayFormat={"DD MMM YYYY"}
+        onChange={openCalendar}
+      />
+
       {!isLoading && (
         <View>
           <View
@@ -103,22 +88,6 @@ export default function ProgressTable() {
               <MaterialCommunityIcons name="calendar" color="white" size="24" />
             </Pressable>
           </View>
-
-          <Text>{text}</Text>
-          <Button title="date" onPress={() => showMode("date")} />
-          <Button title="time" onPress={() => showMode("time")} />
-          {show && (
-            <View>
-              <DateTimePicker
-                testId="dateTimePicker"
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                display="default"
-                onChange={onChange}
-              />
-            </View>
-          )}
 
           <SafeAreaView>
             <FlatList
