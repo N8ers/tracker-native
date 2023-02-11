@@ -12,6 +12,13 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 }
 
+/**
+ * TODO
+ * [ ] replace a lot of this manual date logic with date-fns
+ * [ ] see if there are more chart options/ui stuff that we want to add
+ *
+ */
+
 export default function ProgressChart() {
   const isLoading = useSelector((state) => state.weight.loading)
   const weightsDesc = useSelector((state) => state.weight.weights)
@@ -58,7 +65,7 @@ export default function ProgressChart() {
           <LineChart
             data={data}
             width={screenWidth}
-            height={220}
+            height={300}
             chartConfig={chartConfig}
             verticalLabelRotation={0}
             formatXLabel={(value) => {
