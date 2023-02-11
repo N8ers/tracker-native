@@ -6,7 +6,7 @@ import { AppText } from "../components/AppText"
 
 import { useThemes } from "../hooks/useThemes"
 
-export default ProgressTableRow = ({ id, date, weight }) => {
+export default ProgressTableRow = ({ id, date, weight, onPress }) => {
   const themes = useThemes()
 
   return (
@@ -38,7 +38,7 @@ export default ProgressTableRow = ({ id, date, weight }) => {
         {format(new Date(date), "MMM dd, u")}
       </AppText>
       <Pressable
-        onPress={() => console.log(`id: ${id} was pressed!`)}
+        onPress={() => onPress({ id, date, weight })}
         style={{ flex: 0.5, textAlign: "right" }}
       >
         <MaterialCommunityIcons

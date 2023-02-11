@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import { fetchWeights } from "../store/weights"
 
@@ -15,6 +15,7 @@ import { useThemes } from "../hooks/useThemes"
 import DateRangeSelector from "../components/DateRangeSelector"
 import ProgressTableRow from "../components/ProgressTableRow"
 import ProgressTableHeaders from "../components/ProgressTableHeaders"
+import ProgresssTableRowModal from "../components/ProgressTableRowModal"
 
 export default function ProgressTable() {
   const weights = useSelector((state) => state.weight.weights)
@@ -25,6 +26,18 @@ export default function ProgressTable() {
   const dispatch = useDispatch()
 
   const screenHeight = Dimensions.get("window").height
+
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [selectedRow, setSelectedRow] = useState({
+    id: null,
+    date: null,
+    weight: null,
+  })
+
+  const setSelectedItemData = ({ date, id, weight }) => {
+    setSelectedRow({ date, id, weight })
+    setIsModalVisible(true)
+  }
 
   useEffect(() => {
     dispatch(fetchWeights())
@@ -55,12 +68,23 @@ export default function ProgressTable() {
                     id={item.id}
                     date={item.date}
                     weight={item.weight}
+                    onPress={setSelectedItemData}
                   />
                 )}
                 keyExtractor={(item) => item.id}
               />
             </SafeAreaView>
           </View>
+
+          {isModalVisible && (
+            <ProgresssTableRowModal
+              id={selectedRow.id}
+              date={selectedRow.date}
+              weight={selectedRow.weight}
+              isModalVisible={isModalVisible}
+              closeModal={() => setIsModalVisible(false)}
+            />
+          )}
         </View>
       )}
     </View>

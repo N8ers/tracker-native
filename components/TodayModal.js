@@ -1,10 +1,9 @@
-import { Modal, View, StyleSheet, Button } from "react-native"
+import { Modal, View, StyleSheet } from "react-native"
+import { useState } from "react"
 
 import { AppText } from "./AppText"
 import { AppButton } from "./AppButton"
-
 import { AppInput } from "./AppInput"
-import { useState } from "react"
 
 export function TodayModal({ isModalVisible, closeModal, todaysWeight }) {
   const [weight, setWeight] = useState(todaysWeight)
