@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from "react-redux"
-import { FlatList, SafeAreaView, View, StyleSheet } from "react-native"
+import {
+  FlatList,
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Dimensions,
+} from "react-native"
 import { useEffect } from "react"
 
 import { fetchWeights } from "../store/weights"
@@ -17,6 +23,8 @@ export default function ProgressTable() {
   const themes = useThemes()
 
   const dispatch = useDispatch()
+
+  const screenHeight = Dimensions.get("window").height
 
   useEffect(() => {
     dispatch(fetchWeights())
@@ -38,6 +46,9 @@ export default function ProgressTable() {
 
             <SafeAreaView>
               <FlatList
+                style={{
+                  height: screenHeight - 265,
+                }}
                 data={weights}
                 renderItem={({ item }) => (
                   <ProgressTableRow
@@ -62,6 +73,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     padding: 15,
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
 })
