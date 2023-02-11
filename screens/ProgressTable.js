@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
-import { FlatList, SafeAreaView, Text, View, StyleSheet } from "react-native"
+import { FlatList, SafeAreaView, View } from "react-native"
 import { useEffect } from "react"
 
 import { fetchWeights } from "../store/weights"
 
 import DateRangeSelector from "../components/DateRangeSelector"
+import ProgressTableRow from "../components/ProgressTableRow"
+import { AppText } from "../components/AppText"
 
 export default function ProgressTable() {
   const weights = useSelector((state) => state.weight.weights)
@@ -22,18 +24,19 @@ export default function ProgressTable() {
         <View>
           <DateRangeSelector />
 
+          <View>
+            <AppText>table headers go here (weight, date, edit)</AppText>
+          </View>
+
           <SafeAreaView>
             <FlatList
               data={weights}
               renderItem={({ item }) => (
-                <View>
-                  <Text style={styles.listItem}>
-                    <Text style={styles.listItemDate}>
-                      {item.date.split("T")[0]}
-                    </Text>
-                    <Text style={styles.listItemWeight}>{item.weight}</Text>
-                  </Text>
-                </View>
+                <ProgressTableRow
+                  id={item.id}
+                  date={item.date}
+                  weight={item.weight}
+                />
               )}
               keyExtractor={(item) => item.id}
             />
@@ -43,15 +46,3 @@ export default function ProgressTable() {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  listItem: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 5,
-  },
-  listItemDate: {},
-  listItemWeight: {
-    marginLeft: 50,
-  },
-})
