@@ -1,6 +1,7 @@
-import { FlatList, SafeAreaView, Text, View, StyleSheet } from "react-native"
+import { Text, View } from "react-native"
 import { useState } from "react"
 import DateTimePicker from "@react-native-community/datetimepicker"
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { useThemes } from "../hooks/useThemes"
 
@@ -19,7 +20,7 @@ export default function DateRangeSelector() {
   ) // make this 30 days ago (or just 1 month)
   const [endDateRange, setEndDateRange] = useState(new Date())
 
-  const openCalendar = (event, date, setFunction) => {
+  const openCalendar = (_, date, setFunction) => {
     setFunction(date)
   }
 
@@ -47,8 +48,14 @@ export default function DateRangeSelector() {
         accentColor={themes.secondary.color}
         onChange={(event, date) => openCalendar(event, date, setStartDateRange)}
       />
+      <MaterialCommunityIcons
+        style={{ textAlign: "right" }}
+        name="calendar"
+        color={themes.secondary.color}
+        size={"18"}
+      />
 
-      <Text style={{ marginLeft: 20, marginRight: 20, fontSize: 20 }}>|</Text>
+      <Text style={{ marginLeft: 15, marginRight: 15, fontSize: 20 }}>|</Text>
 
       <DateTimePicker
         testId="dateTimePicker"
@@ -60,6 +67,12 @@ export default function DateRangeSelector() {
         themeVariant="dark"
         accentColor={themes.secondary.color}
         onChange={(event, date) => openCalendar(event, date, setEndDateRange)}
+      />
+      <MaterialCommunityIcons
+        style={{ textAlign: "right" }}
+        name="calendar"
+        color={themes.secondary.color}
+        size={"18"}
       />
     </View>
   )
