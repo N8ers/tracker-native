@@ -5,16 +5,16 @@ import { useThemes } from "../hooks/useThemes"
 export function AppButton({ style, title, color = "primary", onPress }) {
   const themes = useThemes()
 
+  const buttonColors = {
+    primary: themes.actionBackground,
+    secondary: themes.secondaryBackground,
+    danger: themes.dangerBackground,
+  }
+
   return (
     <Pressable
       onPress={onPress}
-      style={[
-        color === "primary"
-          ? themes.actionBackground
-          : themes.secondaryBackground,
-        styles.buttonWrapper,
-        style,
-      ]}
+      style={[buttonColors[color], styles.buttonWrapper, style]}
     >
       <Text style={styles.title}>{title}</Text>
     </Pressable>
