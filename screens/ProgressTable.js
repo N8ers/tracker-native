@@ -6,7 +6,7 @@ import { fetchWeights } from "../store/weights"
 
 import DateRangeSelector from "../components/DateRangeSelector"
 import ProgressTableRow from "../components/ProgressTableRow"
-import { AppText } from "../components/AppText"
+import ProgressTableHeaders from "../components/ProgressTableHeaders"
 
 export default function ProgressTable() {
   const weights = useSelector((state) => state.weight.weights)
@@ -24,9 +24,7 @@ export default function ProgressTable() {
         <View>
           <DateRangeSelector />
 
-          <View>
-            <AppText>table headers go here (weight, date, edit)</AppText>
-          </View>
+          <ProgressTableHeaders />
 
           <SafeAreaView>
             <FlatList
