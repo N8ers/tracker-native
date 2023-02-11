@@ -1,14 +1,30 @@
 import { useDispatch, useSelector } from "react-redux"
-import { FlatList, SafeAreaView, Text, View, StyleSheet } from "react-native"
+import {
+  FlatList,
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Dimensions,
+} from "react-native"
+import { useEffect } from "react"
 
 import { fetchWeights } from "../store/weights"
-import { useEffect } from "react"
+
+import { useThemes } from "../hooks/useThemes"
+
+import DateRangeSelector from "../components/DateRangeSelector"
+import ProgressTableRow from "../components/ProgressTableRow"
+import ProgressTableHeaders from "../components/ProgressTableHeaders"
 
 export default function ProgressTable() {
   const weights = useSelector((state) => state.weight.weights)
   const isLoading = useSelector((state) => state.weight.loading)
 
+  const themes = useThemes()
+
   const dispatch = useDispatch()
+
+  const screenHeight = Dimensions.get("window").height
 
   useEffect(() => {
     dispatch(fetchWeights())
@@ -18,26 +34,33 @@ export default function ProgressTable() {
     <View>
       {!isLoading && (
         <View>
-          <Text style={styles.rangeSelector}>
-            I will be a drop down month selector
-          </Text>
+          <DateRangeSelector />
 
-          <SafeAreaView>
-            <FlatList
-              data={weights}
-              renderItem={({ item }) => (
-                <View style={styles.listItemContainer}>
-                  <Text style={styles.listItem}>
-                    <Text style={styles.listItemDate}>
-                      {item.date.split("T")[0]}
-                    </Text>
-                    <Text style={styles.listItemWeight}>{item.weight}</Text>
-                  </Text>
-                </View>
-              )}
-              keyExtractor={(item) => item.id}
-            />
-          </SafeAreaView>
+          <View
+            style={[
+              styles.tableContainer,
+              { backgroundColor: themes.lightBackground },
+            ]}
+          >
+            <ProgressTableHeaders />
+
+            <SafeAreaView>
+              <FlatList
+                style={{
+                  height: screenHeight - 265,
+                }}
+                data={weights}
+                renderItem={({ item }) => (
+                  <ProgressTableRow
+                    id={item.id}
+                    date={item.date}
+                    weight={item.weight}
+                  />
+                )}
+                keyExtractor={(item) => item.id}
+              />
+            </SafeAreaView>
+          </View>
         </View>
       )}
     </View>
@@ -45,17 +68,12 @@ export default function ProgressTable() {
 }
 
 const styles = StyleSheet.create({
-  rangeSelector: {
-    padding: 20,
-  },
-  listItemContainer: {},
-  listItem: {
+  tableContainer: {
     borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 5,
-  },
-  listItemDate: {},
-  listItemWeight: {
-    marginLeft: 50,
+    marginLeft: 20,
+    marginRight: 20,
+    padding: 15,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
 })

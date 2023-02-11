@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 
+import { useThemes } from "../hooks/useThemes"
+
 import Home from "../screens/Home"
 import Today from "../screens/Today"
 import Settings from "../screens/Settings"
@@ -13,9 +15,30 @@ const BottomTab = createBottomTabNavigator()
 const TopTab = createMaterialTopTabNavigator()
 
 function ProgressNavigator() {
+  const themes = useThemes()
+
   return (
-    <TopTab.Navigator>
-      <TopTab.Screen name="Numbers" component={ProgressTable} />
+    <TopTab.Navigator
+      sceneContainerStyle={{
+        backgroundColor: "#151718",
+      }}
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: themes.lightBackground,
+        },
+        tabBarLabelStyle: {
+          paddingTop: 10,
+          fontSize: 14,
+          fontWeight: "bold",
+        },
+        tabBarActiveTintColor: themes.secondary.color,
+        tabBarInactiveTintColor: "#FFF",
+        tabBarIndicatorStyle: {
+          backgroundColor: themes.secondary.color,
+        },
+      }}
+    >
+      <TopTab.Screen name="Table" component={ProgressTable} />
       <TopTab.Screen name="Chart" component={ProgressChart} />
     </TopTab.Navigator>
   )

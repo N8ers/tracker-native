@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { View, StyleSheet } from "react-native"
+import { format } from "date-fns"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { AppText } from "../components/AppText"
@@ -25,21 +26,8 @@ export default function Today() {
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [weight, setWeight] = useState(0)
-  const [todaysDate, setTodaysDate] = useState("")
-
-  const calculateTodaysDate = () => {
-    let date = new Date()
-    date = date.toLocaleDateString("default", {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-    })
-
-    setTodaysDate(date)
-  }
 
   useEffect(() => {
-    calculateTodaysDate()
     dispatch(getTodaysWeight())
   }, [])
 
@@ -93,7 +81,9 @@ export default function Today() {
   return (
     <View style={styles.container}>
       <ContentWrapper>
-        <AppText style={styles.todaysDate}>{todaysDate}</AppText>
+        <AppText style={styles.todaysDate}>
+          {format(new Date(), "EEEE, LLLL d")}
+        </AppText>
 
         {todaysWeight ? RecoredMessage : NotRecoredMessage}
       </ContentWrapper>
