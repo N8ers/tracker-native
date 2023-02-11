@@ -28,26 +28,24 @@ export default function ProgressTable() {
     dispatch(fetchWeights())
   }, [])
 
-  const [date, setDate] = useState(new Date())
+  const createInitialStateDateRange = () => {
+    const today = new Date()
+    const oneMonthAgo = today.setMonth(today.getMonth() - 1)
+    const oneMonthAgoToDate = new Date(oneMonthAgo)
+    return oneMonthAgoToDate
+  }
 
-  const openCalendar = (event, date) => {
-    console.log(date)
-    // setDate()
+  const [startDateRange, setStartDateRange] = useState(
+    createInitialStateDateRange()
+  ) // make this 30 days ago (or just 1 month)
+  const [endDateRange, setEndDateRange] = useState(new Date())
+
+  const openCalendar = (event, date, setFunction) => {
+    setFunction(date)
   }
 
   return (
     <View>
-      <DateTimePicker
-        testId="dateTimePicker"
-        value={date}
-        mode={"date"}
-        is24Hour={true}
-        display="default"
-        format={"YYYY/MM/DD"}
-        displayFormat={"DD MMM YYYY"}
-        onChange={openCalendar}
-      />
-
       {!isLoading && (
         <View>
           <View
@@ -62,31 +60,37 @@ export default function ProgressTable() {
               alignItems: "center",
             }}
           >
-            <Pressable
-              onPress={() => openCalendar("startRange")}
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "white", marginRight: 10 }}>MM/DD/YYY</Text>
-              <MaterialCommunityIcons name="calendar" color="white" size="24" />
-            </Pressable>
+            <DateTimePicker
+              testId="dateTimePicker"
+              value={startDateRange}
+              mode={"date"}
+              is24Hour={true}
+              display="default"
+              displayFormat={"DD MM YYYY"}
+              themeVariant="dark"
+              accentColor={themes.secondary.color}
+              onChange={(event, date) =>
+                openCalendar(event, date, setStartDateRange)
+              }
+            />
+
             <Text style={{ marginLeft: 20, marginRight: 20, fontSize: 20 }}>
               |
             </Text>
-            <Pressable
-              onPress={() => openCalendar("endRange")}
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "white", marginRight: 10 }}>MM/DD/YYY</Text>
-              <MaterialCommunityIcons name="calendar" color="white" size="24" />
-            </Pressable>
+
+            <DateTimePicker
+              testId="dateTimePicker"
+              value={endDateRange}
+              mode={"date"}
+              is24Hour={true}
+              display="default"
+              displayFormat={"DD MM YYYY"}
+              themeVariant="dark"
+              accentColor={themes.secondary.color}
+              onChange={(event, date) =>
+                openCalendar(event, date, setEndDateRange)
+              }
+            />
           </View>
 
           <SafeAreaView>
