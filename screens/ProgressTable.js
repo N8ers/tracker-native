@@ -40,7 +40,7 @@ export default function ProgressTable() {
   }
 
   useEffect(() => {
-    dispatch(fetchWeights())
+    // dispatch(fetchWeights())
   }, [])
 
   return (
