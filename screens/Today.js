@@ -28,17 +28,17 @@ export default function Today() {
   const [weight, setWeight] = useState(0)
 
   useEffect(() => {
-    dispatch(getTodaysWeight())
+    // dispatch(getTodaysWeight())
   }, [])
 
   const addWeight = () => {
-    dispatch(addTodaysWeight({ weight }))
+    // dispatch(addTodaysWeight({ weight }))
   }
 
   const updateWeight = () => {
     const trimmedWeight = weight.trim()
     if (trimmedWeight.length) {
-      dispatch(updateTodaysWeight({ weight: trimmedWeight }))
+      // dispatch(updateTodaysWeight({ weight: trimmedWeight }))
       setIsModalVisible(false)
       setWeight(0)
     }

@@ -8,7 +8,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { StyleSheet, View, ActivityIndicator, StatusBar } from "react-native"
 
-import { authToken } from "../store/user"
+// import { authToken } from "../store/user"
 
 import NotAuthenticatedNavigator from "../navigators/NotAuthenticatedNavigator"
 import AuthenticatedNavigator from "../navigators/AuthenticatedNavigator"
@@ -22,7 +22,7 @@ export default function ScreensWrapper() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(authToken())
+    // dispatch(authToken())
   }, [])
 
   return (

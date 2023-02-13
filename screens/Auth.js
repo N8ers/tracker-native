@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { View, StyleSheet, Button, TextInput } from "react-native"
 
-import { authUser } from "../store/user"
+// import { authUser } from "../store/user"
 
 export default function Auth() {
   const dispatch = useDispatch()
@@ -11,7 +11,7 @@ export default function Auth() {
   const [password, setPassword] = useState("")
 
   const attemptLogin = () => {
-    dispatch(authUser({ username, password }))
+    // dispatch(authUser({ username, password }))
   }
 
   return (

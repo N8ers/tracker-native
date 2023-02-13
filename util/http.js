@@ -29,29 +29,29 @@ const configAxios = async () => {
   })
 }
 
-export const fetchWeights = async () => {
-  try {
-    const result = await authAxios.get("/weights")
-    return result.data
-  } catch (error) {
-    showErrorToast({
-      headerText: "There was an error getting weights.",
-      subText: error.message,
-    })
-  }
-}
+// export const fetchWeights = async () => {
+//   try {
+//     const result = await authAxios.get("/weights")
+//     return result.data
+//   } catch (error) {
+//     showErrorToast({
+//       headerText: "There was an error getting weights.",
+//       subText: error.message,
+//     })
+//   }
+// }
 
-export const getTodaysWeight = async (weight) => {
-  try {
-    const result = await authAxios.get("/todays-weight")
-    return result.data
-  } catch (error) {
-    showErrorToast({
-      headerText: "Error getting todays weight. Please try again.",
-      subText: error.message,
-    })
-  }
-}
+// export const getTodaysWeight = async () => {
+//   try {
+//     const result = await authAxios.get("/todays-weight")
+//     return result.data
+//   } catch (error) {
+//     showErrorToast({
+//       headerText: "Error getting todays weight. Please try again.",
+//       subText: error.message,
+//     })
+//   }
+// }
 
 export const postTodaysWeight = async (weight) => {
   try {
